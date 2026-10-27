@@ -1,0 +1,9 @@
+{
+  "name": "up-service",
+  "version": "1.0.0",
+  "private": true,
+  "description": "উপজেলার নাগরিক সেবার তথ্যভিত্তিক ওয়েব অ্যাপ",
+  "scripts": {
+    "start": "python3 -m http.server 8000"
+  }
+}
