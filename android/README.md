@@ -1,3 +1,3 @@
 # UP Service Android
 
-এই ফোল্ডারটি UP Service-এর Android অ্যাপের জন্য রাখা হয়েছে। Android অ্যাপের source code ও build configuration এখানে যোগ করা হবে।
+Android অ্যাপের Expo entry point (`../App.js`) ও configuration (`../app.json`) repository root-এ রাখা হয়েছে। এই ফোল্ডারটি ভবিষ্যতে প্রয়োজন হলে native Android project files-এর জন্য ব্যবহার করা যাবে।
