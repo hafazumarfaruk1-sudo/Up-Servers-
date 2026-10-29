@@ -1,5 +1,4 @@
 package bd.upservice.app
-
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
