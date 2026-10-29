@@ -1,13 +1,11 @@
 package bd.upservice.app
-
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 
-class SafeAreaModule(reactContext: ReactApplicationContext) :
-    ReactContextBaseJavaModule(reactContext) {
+class SafeAreaModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     override fun getName(): String {
         return "SafeAreaModule"
@@ -19,18 +17,21 @@ class SafeAreaModule(reactContext: ReactApplicationContext) :
             val resources = reactApplicationContext.resources
             val density = resources.displayMetrics.density
 
+            // স্ট্যাটাস বার (ওপরের বার) এর উচ্চতা মাপা
             var statusBarHeight = 0f
-            val statusBarId = resources.getIdentifier("status_bar_height", "dimen", "android")
-            if (statusBarId > 0) {
-                statusBarHeight = resources.getDimensionPixelSize(statusBarId) / density
+            val statusId = resources.getIdentifier("status_bar_height", "dimen", "android")
+            if (statusId > 0) {
+                statusBarHeight = resources.getDimensionPixelSize(statusId) / density
             }
 
+            // নেভিগেশন বার (নিচের বাটনগুলো) এর উচ্চতা মাপা
             var navBarHeight = 0f
-            val navBarId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-            if (navBarId > 0) {
-                navBarHeight = resources.getDimensionPixelSize(navBarId) / density
+            val navId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+            if (navId > 0) {
+                navBarHeight = resources.getDimensionPixelSize(navId) / density
             }
 
+            // React Native এর জন্য Map তৈরি করা
             val map = Arguments.createMap()
             map.putDouble("top", statusBarHeight.toDouble())
             map.putDouble("bottom", navBarHeight.toDouble())
