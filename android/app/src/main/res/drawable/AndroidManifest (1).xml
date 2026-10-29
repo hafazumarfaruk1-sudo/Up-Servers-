@@ -1,0 +1,141 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+  <!-- অ্যান্ড্রয়েড ১৪ (API 34) এবং এর ওপরের ভার্সনে ব্যাকগ্রাউন্ড মিডিয়ার জন্য বাধ্যতামূলক -->
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.RECORD_AUDIO" />
+  <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
+  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+  <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+  <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED"/>
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+  <uses-permission android:name="android.permission.VIBRATE"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+
+  <!-- ========================================== -->
+  <!-- ১. ফাইল ডাউনলোড ও স্টোরেজ পারমিশন (Knowbook ফোল্ডারের জন্য) -->
+  <!-- ========================================== -->
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" tools:replace="android:maxSdkVersion"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" tools:replace="android:maxSdkVersion"/>
+
+  <!-- ২. ক্যালেন্ডার পারমিশন -->
+  <uses-permission android:name="android.permission.READ_CALENDAR" />
+  <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
+  <!-- ৩. কন্টাক্টস পারমিশন -->
+  <uses-permission android:name="android.permission.READ_CONTACTS" />
+  <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+
+  <!-- ৪. লোকেশন পারমিশন (Network এবং GPS ভিত্তিক) -->
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+  <!-- ৫. নোটিফিকেশন পারমিশন (Android 13 / API 33 এবং এর ওপরের ভার্সনের জন্য বাধ্যতামূলক) -->
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+  <!-- ৬. ফোন পারমিশন (স্টেট রিড করা এবং কল করা) -->
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <uses-permission android:name="android.permission.CALL_PHONE" />
+
+  <!-- [গুরুত্বপূর্ণ]: ফোন পকেটে বা লক থাকা অবস্থায় ইনকামিং কল স্ক্রিন পপ-আপ করানোর জন্য -->
+  <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+  <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
+  <queries>
+    <intent>
+      <action android:name="android.intent.action.VIEW"/>
+      <category android:name="android.intent.category.BROWSABLE"/>
+      <data android:scheme="https"/>
+    </intent>
+  </queries>
+
+  <!-- android:requestLegacyExternalStorage="true" থাকার ফলে Android 10/11 তেও Documents ফোল্ডারে সহজেই Knowbook ফোল্ডার তৈরি করা যাবে -->
+  <application 
+      android:name=".MainApplication" 
+      android:label="@string/app_name" 
+      android:icon="@mipmap/ic_launcher" 
+      android:roundIcon="@mipmap/ic_launcher_round" 
+      android:allowBackup="true" 
+      android:theme="@style/AppTheme" 
+      android:supportsRtl="true" 
+      android:enableOnBackInvokedCallback="false" 
+      android:requestLegacyExternalStorage="true">
+      
+    <meta-data android:name="expo.modules.updates.ENABLED" android:value="false"/>
+    <meta-data android:name="expo.modules.updates.ENABLE_BSDIFF_PATCH_SUPPORT" android:value="true"/>
+    <meta-data android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH" android:value="ALWAYS"/>
+    <meta-data android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS" android:value="0"/>
+
+    <activity android:name=".MainActivity" android:resizeableActivity="true" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|assetsPaths" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.App.SplashScreen" android:exported="true" android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="worldbooks"/>
+        <data android:scheme="exp+library-of-the-world-books"/>
+      </intent-filter>
+    </activity>
+
+    <!-- ========================================== -->
+    <!-- অডিও ব্যাকগ্রাউন্ড সার্ভিস (Lockscreen Media Controls) -->
+    <!-- ========================================== -->
+    <service 
+        android:name="com.omarfaruk.ebook.AudioService" 
+        android:exported="false" 
+        android:foregroundServiceType="mediaPlayback" />
+
+    <!-- ========================================== -->
+    <!-- কাস্টম ফায়ারবেস ক্লাউড মেসেজিং সার্ভিস (সাধারণ ডেটা ও নোটিফিকেশনের জন্য) -->
+    <!-- ========================================== -->
+    <service
+        android:name=".FCMService"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+    </service>
+
+    <!-- ========================================== -->
+    <!-- VoIP আর্কিটেকচার রেজিস্ট্রি -->
+    <!-- ========================================== -->
+
+    <!-- ১. কাস্টম ইনকামিং কল স্ক্রিন (Activity) -->
+    <activity 
+        android:name="com.omarfaruk.voip.IncomingCallActivity"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:showOnLockScreen="true"
+        android:turnScreenOn="true"
+        android:launchMode="singleInstance"
+        android:excludeFromRecents="true"
+        android:exported="true" />
+
+    <!-- ২. ফায়ারবেস ব্যাকগ্রাউন্ড সার্ভিস (Service) (VoIP এর জন্য) -->
+    <service
+        android:name="com.omarfaruk.voip.VoipMessagingService"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+    </service>
+
+    <!-- ৩. টেলিকম ফ্রেমওয়ার্কের কানেকশন সার্ভিস -->
+    <service android:name="com.omarfaruk.voip.VoipConnectionService"
+        android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.telecom.ConnectionService" />
+        </intent-filter>
+    </service>
+
+  </application>
+</manifest>
