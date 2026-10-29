@@ -11,6 +11,9 @@ import com.facebook.react.ReactHost
 import com.facebook.react.common.ReleaseLevel
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint
 
+// SafeAreaPackage ইমপোর্ট করা হলো
+import com.th3rdwave.safeareacontext.SafeAreaPackage
+
 import expo.modules.ApplicationLifecycleDispatcher
 import expo.modules.ExpoReactHostFactory
 
@@ -23,6 +26,9 @@ class MainApplication : Application(), ReactApplication {
         PackageList(this).packages.apply {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // add(MyReactNativePackage())
+          
+          // এখানে SafeAreaPackage যুক্ত করা হলো
+          add(SafeAreaPackage())
         }
     )
   }
