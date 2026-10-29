@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 
 // screens ফোল্ডার থেকে ফাইলগুলো ইমপোর্ট করা
-import QRScannerScreen from './screens/qrscanner';
-import AddNewScreen from './screens/addnew';
-import PersonListScreen from './screens/personlist';
-import CreatingCardScreen from './screens/creatingcard';
-import EmailChangeScreen from './screens/emailchange';
+import QRScannerScreen from './home/qrscanner';
+import AddNewScreen from './home/addnew';
+import PersonListScreen from './home/personlist';
+import CreatingCardScreen from './home/creatingcard';
+import EmailChangeScreen from './home/emailchange';
 
 export default function App() {
   const [theme, setTheme] = useState('light');
