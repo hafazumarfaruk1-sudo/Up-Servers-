@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "UPService.app"
-               BlueprintName = "UPService"
-               ReferencedContainer = "container:UPService.xcodeproj">
+               BuildableName = "SmartService.app"
+               BlueprintName = "SmartService"
+               ReferencedContainer = "container:SmartService.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "UPServiceTests.xctest"
-               BlueprintName = "UPServiceTests"
-               ReferencedContainer = "container:UPService.xcodeproj">
+               BuildableName = "SmartServiceTests.xctest"
+               BlueprintName = "SmartServiceTests"
+               ReferencedContainer = "container:SmartService.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "UPService.app"
-            BlueprintName = "UPService"
-            ReferencedContainer = "container:UPService.xcodeproj">
+            BuildableName = "SmartService.app"
+            BlueprintName = "SmartService"
+            ReferencedContainer = "container:SmartService.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "UPService.app"
-            BlueprintName = "UPService"
-            ReferencedContainer = "container:UPService.xcodeproj">
+            BuildableName = "SmartService.app"
+            BlueprintName = "SmartService"
+            ReferencedContainer = "container:SmartService.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
