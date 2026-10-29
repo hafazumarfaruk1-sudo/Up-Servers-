@@ -6,10 +6,20 @@
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "android": {
-      "package": "bd.upservice.app"
+      "package": "bd.upservice.app",
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "ios": {
-      "bundleIdentifier": "bd.upservice.app"
+      "bundleIdentifier": "bd.upservice.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to scan QR codes and take photos.",
+        "NSMicrophoneUsageDescription": "This app uses the microphone for video recording."
+      }
     },
     "extra": {
       "eas": {
@@ -18,3 +28,4 @@
     }
   }
 }
+
