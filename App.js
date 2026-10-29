@@ -1,75 +1,112 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 
+// screens ফোল্ডার থেকে ফাইলগুলো ইমপোর্ট করা
+import QRScannerScreen from './screens/qrscanner';
+import AddNewScreen from './screens/addnew';
+import PersonListScreen from './screens/personlist';
+import CreatingCardScreen from './screens/creatingcard';
+import EmailChangeScreen from './screens/emailchange';
+
 export default function App() {
   const [theme, setTheme] = useState('light');
-  const [activeSection, setActiveSection] = useState(null);
+  const [currentScreen, setCurrentScreen] = useState('home'); // বর্তমান স্ক্রিন ট্র্যাক করার স্টেট
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
-  const handleOptionClick = (optionName) => {
-    setActiveSection(optionName);
-  };
-
   const isDark = theme === 'dark';
+
+  // নেভিগেশনের জন্য স্ক্রিন রেন্ডার করার ফাংশন
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'qrscanner':
+        return <QRScannerScreen onBack={() => setCurrentScreen('home')} />;
+      case 'addnew':
+        return <AddNewScreen onBack={() => setCurrentScreen('home')} />;
+      case 'personlist':
+        return <PersonListScreen onBack={() => setCurrentScreen('home')} />;
+      case 'creatingcard':
+        return <CreatingCardScreen onBack={() => setCurrentScreen('home')} />;
+      case 'emailchange':
+        return <EmailChangeScreen onBack={() => setCurrentScreen('home')} />;
+      default:
+        return (
+          <View style={styles.dashboardGrid}>
+            {/* অপশন ১: QR code scanner */}
+            <TouchableOpacity 
+              style={[styles.dashboardCard, isDark ? styles.darkCard : styles.lightCard]} 
+              onPress={() => setCurrentScreen('qrscanner')}
+            >
+              <Text style={styles.cardIcon}>📷</Text>
+              <Text style={[styles.cardTitle, isDark ? styles.darkText : styles.lightText]}>QR code scanner</Text>
+              <Text style={styles.cardDesc}>স্ক্যান করে দ্রুত তথ্য নিশ্চিত করুন</Text>
+            </TouchableOpacity>
+
+            {/* অপশন ২: add new person */}
+            <TouchableOpacity 
+              style={[styles.dashboardCard, isDark ? styles.darkCard : styles.lightCard]} 
+              onPress={() => setCurrentScreen('addnew')}
+            >
+              <Text style={styles.cardIcon}>➕</Text>
+              <Text style={[styles.cardTitle, isDark ? styles.darkText : styles.lightText]}>add new person</Text>
+              <Text style={styles.cardDesc}>নতুন ব্যক্তি বা ডেটা যুক্ত করুন</Text>
+            </TouchableOpacity>
+
+            {/* অপশন ৩: all person list */}
+            <TouchableOpacity 
+              style={[styles.dashboardCard, isDark ? styles.darkCard : styles.lightCard]} 
+              onPress={() => setCurrentScreen('personlist')}
+            >
+              <Text style={styles.cardIcon}>📋</Text>
+              <Text style={[styles.cardTitle, isDark ? styles.darkText : styles.lightText]}>all person list</Text>
+              <Text style={styles.cardDesc}>সকল ব্যক্তির তালিকা ও সার্চ করুন</Text>
+            </TouchableOpacity>
+
+            {/* অপশন ৪: creating all card */}
+            <TouchableOpacity 
+              style={[styles.dashboardCard, isDark ? styles.darkCard : styles.lightCard]} 
+              onPress={() => setCurrentScreen('creatingcard')}
+            >
+              <Text style={styles.cardIcon}>🪪</Text>
+              <Text style={[styles.cardTitle, isDark ? styles.darkText : styles.lightText]}>creating all card</Text>
+              <Text style={styles.cardDesc}>সবগুলোর জন্য কার্ড তৈরি করুন</Text>
+            </TouchableOpacity>
+          </View>
+        );
+    }
+  };
 
   return (
     <SafeAreaView style={[styles.container, isDark ? styles.darkContainer : styles.lightContainer]}>
       <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
       
-      {/* উপরে এক লাইন লেখা: UP Servers */}
+      {/* উপরে এক লাইন লেখা: UP Servers এবং ইমেইল চেঞ্জ বাটন */}
       <View style={[styles.upServersBar, isDark ? styles.darkBar : styles.lightBar]}>
-        <Text style={[styles.barTitle, isDark ? styles.darkText : styles.lightText]}>UP Servers</Text>
-        <TouchableOpacity style={styles.themeBtn} onPress={toggleTheme}>
-          <Text style={styles.themeBtnText}>
-            {theme === 'light' ? '🌙 ডार्क' : '☀️ লাইট'}
-          </Text>
+        <TouchableOpacity onPress={() => setCurrentScreen('home')}>
+          <Text style={[styles.barTitle, isDark ? styles.darkText : styles.lightText]}>UP Servers</Text>
         </TouchableOpacity>
+
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableOpacity 
+            style={[styles.themeBtn, { marginRight: 8, backgroundColor: '#17a2b8' }]} 
+            onPress={() => setCurrentScreen('emailchange')}
+          >
+            <Text style={[styles.themeBtnText, { color: '#fff' }]}>✉️ ইমেইল</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.themeBtn} onPress={toggleTheme}>
+            <Text style={styles.themeBtnText}>
+              {theme === 'light' ? '🌙 ডार्क' : '☀️ লাইট'}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* নিচের সম্পূর্ণ স্ক্রিন জায়গা নিয়ে চারটি ভাগ (Grid Layout) */}
-      <View style={styles.dashboardGrid}>
-        {/* অপশন ১ */}
-        <TouchableOpacity 
-          style={[styles.dashboardCard, isDark ? styles.darkCard : styles.lightCard]} 
-          onPress={() => handleOptionClick('QR code scanner')}
-        >
-          <Text style={styles.cardIcon}>📷</Text>
-          <Text style={[styles.cardTitle, isDark ? styles.darkText : styles.lightText]}>QR code scanner</Text>
-          <Text style={styles.cardDesc}>স্ক্যান করে দ্রুত তথ্য নিশ্চিত করুন</Text>
-        </TouchableOpacity>
-
-        {/* অপশন ২ */}
-        <TouchableOpacity 
-          style={[styles.dashboardCard, isDark ? styles.darkCard : styles.lightCard]} 
-          onPress={() => handleOptionClick('add new person')}
-        >
-          <Text style={styles.cardIcon}>➕</Text>
-          <Text style={[styles.cardTitle, isDark ? styles.darkText : styles.lightText]}>add new person</Text>
-          <Text style={styles.cardDesc}>নতুন ব্যক্তি বা ডেটা যুক্ত করুন</Text>
-        </TouchableOpacity>
-
-        {/* অপশন ৩ */}
-        <TouchableOpacity 
-          style={[styles.dashboardCard, isDark ? styles.darkCard : styles.lightCard]} 
-          onPress={() => handleOptionClick('all person list')}
-        >
-          <Text style={styles.cardIcon}>📋</Text>
-          <Text style={[styles.cardTitle, isDark ? styles.darkText : styles.lightText]}>all person list</Text>
-          <Text style={styles.cardDesc}>সকল ব্যক্তির তালিকা ও সার্চ করুন</Text>
-        </TouchableOpacity>
-
-        {/* অপশন ৪ */}
-        <TouchableOpacity 
-          style={[styles.dashboardCard, isDark ? styles.darkCard : styles.lightCard]} 
-          onPress={() => handleOptionClick('creating all card')}
-        >
-          <Text style={styles.cardIcon}>🪪</Text>
-          <Text style={[styles.cardTitle, isDark ? styles.darkText : styles.lightText]}>creating all card</Text>
-          <Text style={styles.cardDesc}>সবগুলোর জন্য কার্ড তৈরি করুন</Text>
-        </TouchableOpacity>
+      {/* ডায়নামিক স্ক্রিন রেন্ডারিং */}
+      <View style={{ flex: 1 }}>
+        {renderScreen()}
       </View>
 
       {/* ফুটার */}
@@ -114,12 +151,12 @@ const styles = StyleSheet.create({
   },
   themeBtn: {
     paddingVertical: 6,
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
     borderRadius: 6,
     backgroundColor: '#e9ecef',
   },
   themeBtnText: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
   },
   dashboardGrid: {
