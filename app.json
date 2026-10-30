@@ -21,13 +21,20 @@
         "NSMicrophoneUsageDescription": "This app uses the microphone for video recording."
       }
     },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "2.1.0"
+          }
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "334facdf-ec0d-42f7-8aff-82cc8e122b1d"
       }
-    },
-    "plugins": [
-      "expo-status-bar"
-    ]
+    }
   }
 }
